@@ -17,6 +17,7 @@ for num in x:
     xerr2.append(2 * num * xerr)
 
 kv2 = [c**2 for c in x]
+print(kv2)
 #Create a plot of data points only with error bars of the appropriate size. Green points = go
 plot2.errorbar(kv2, y, yerr, xerr2, fmt='go', capsize=2.5)  
 
