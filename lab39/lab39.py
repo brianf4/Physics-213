@@ -38,24 +38,55 @@ dq = Q / numberOfPieces
 dq2 = Q / numberOfPieces2
 
 
-
 for x in locationOfPieces:
     littleChargedParticle = chargedParticle(np.array([x, 0, 0]), dq)
 
     electricFieldAtP += littleChargedParticle.electricFieldCalculator(np.array([d, 0, 0]))
 
 E1 = electricFieldAtP
-print(E1[0])
 
 for x in locationOfPieces2:
     littleChargedParticle = chargedParticle(np.array([x, 0, 0]), dq2)
 
     electricFieldAtP2 += littleChargedParticle.electricFieldCalculator(np.array([d, 0, 0]))
 E2 = electricFieldAtP2
-print(E2[0])
 
-
+#Exercise 39.1
 absolute = abs(E1[0] - E2[0])
-percent_difference = absolute / (E1[0] * 100)
+percent_difference = absolute / E2[0] * 100
 print(percent_difference)
 
+
+
+Q = 5e-9
+R = 10e-2
+
+dQ = Q / 10
+dQ2 = Q / 1000000
+
+
+xLocationsOnRing = R * np.cos(np.linspace(np.pi/2, -np.pi/2, numberOfPieces2))
+yLocationsOnRing = R * np.cos(np.linspace(np.pi/2, -np.pi/2, numberOfPieces2))
+
+
+for x, y in zip(xLocationsOnRing, yLocationsOnRing):
+    littleChargedParticle = chargedParticle(np.array([x,y,0]), dQ)
+    electricFieldAtP += littleChargedParticle.electricFieldCalculator([0,0,0])
+
+E3 = electricFieldAtP
+
+print(E3)
+
+
+for x, y in zip(xLocationsOnRing, yLocationsOnRing):
+    littleChargedParticle = chargedParticle(np.array([x,y,0]), dQ2)
+    electricFieldAtP += littleChargedParticle.electricFieldCalculator([0,0,0])
+
+E4 = electricFieldAtP
+
+print(E4)
+
+difference = np.abs((E3[0] - E4[0]) / E4[0]) * 100
+
+# Exercise 39.3
+print(f'Percent Difference: {difference}')
