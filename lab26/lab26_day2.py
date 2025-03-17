@@ -13,14 +13,14 @@ plot1 = fig.add_subplot(2, 1, 1)
 plot2 = fig.add_subplot(2, 1, 2)
 
 # Plot opitons
-plot1.set_title('The Voltage Difference Across a Resistor', family='sans-serif', fontsize=18)
+plot1.set_title('The Voltage Difference Across a Resistor in Series', family='sans-serif', fontsize=18)
 plot1.set_xlabel('$Current (A)$', fontsize=16) # Label for y
 plot1.set_ylabel('$Voltage Difference (V)$', fontsize=16) # Label for x
 #plot1.set_xlim(1, 3) # Set the limits in the x-direction
 #plot1.set_ylim(4, 6) # Set the limits in the y-direction
 plot1.grid(True)
 plot1.minorticks_on()
-plot2.set_title('The Voltage Difference Across a Resistor', family='sans-serif', fontsize=18)
+plot2.set_title('The Voltage Difference Across a Resistor in Parallel', family='sans-serif', fontsize=18)
 plot2.set_xlabel('$Current (A)$', fontsize=16) # Label for y
 plot2.set_ylabel('$Voltage Difference (V)$', fontsize=16) # Label for x
 #plot2.set_xlim(1, 3) # Set the limits in the x-direction
