@@ -1,16 +1,30 @@
+from logging import warn
 import numpy as np
 import matplotlib.pyplot as plotter
 
-x = np.array([])
-y = np.array([])
+# total current (I-net)
+x = np.array([0.00167, 0.00237, 0.00264, 0.00308, 0.00380, 0.00449, 0.00524, 0.00591, 0.00661, 0.00733, 0.00806, 0.00875, 0.00948, 0.01019, 0.01091, 0.01163, 0.01234, 0.01306, 0.01378, 0.01449])
 
-x2 = np.array([])
-y2 = np.array([])
+# c1dc
+y1 = np.array([0.471, 0.712, 0.807, 0.866, 1.193, 1.432, 1.680, 1.908, 2.148, 2.392, 2.633, 2.871, 3.110, 3.348, 3.587, 3.826, 4.068, 4.307, 4.544, 4.782])
+# c2dc
+y2 = np.array([0.002, 0.003, 0.005, 0.005, 0.010, 0.012, 0.016, 0.020, 0.023, 0.027, 0.031, 0.033, 0.038, 0.039, 0.045, 0.048, 0.052, 0.055, 0.058, 0.063])
 
-fig = plotter.figure(figsize=(12, 10))
+# potential differene combination
+y = y1 + y2
+
+
+# c1DC Parallel
+para_x2 = np.array([0.06945, 0.10265, 0.11607, 0.13610, 0.15399, 0.16909, 0.17958, 0.19468, 0.20165, 0.21960, 0.23344, 0.25578, 0.26432, 0.28442, 0.30852, 0.31916, 0.32640, 0.33938, 0.35469])
+para_y2= np.array([0.311, 0.465, 0.528, 0.611, 0.704, 0.774, 0.823, 0.893, 0.928, 1.012, 1.079, 1.134, 1.224, 1.318, 1.435, 1.490, 1.523, 1.592, 1.66])
+print(len(para_x2))
+print(len(para_y2))
+
+fig = plotter.figure(figsize=(10, 8))
 fig.tight_layout()
 plot1 = fig.add_subplot(2, 1, 1)
 plot2 = fig.add_subplot(2, 1, 2)
+
 
 # Plot opitons
 plot1.set_title('The Voltage Difference Across a Resistor in Series', family='sans-serif', fontsize=18)
@@ -20,7 +34,7 @@ plot1.set_ylabel('$Voltage Difference (V)$', fontsize=16) # Label for x
 #plot1.set_ylim(4, 6) # Set the limits in the y-direction
 plot1.grid(True)
 plot1.minorticks_on()
-plot2.set_title('The Voltage Difference Across a Resistor in Parallel', family='sans-serif', fontsize=18)
+plot2.set_title('Voltage Difference Across a Resistor in Parallel', family='sans-serif', fontsize=18)
 plot2.set_xlabel('$Current (A)$', fontsize=16) # Label for y
 plot2.set_ylabel('$Voltage Difference (V)$', fontsize=16) # Label for x
 #plot2.set_xlim(1, 3) # Set the limits in the x-direction
@@ -59,7 +73,7 @@ def linear_regression(x, y):
     return slope, intercept, r, predictions, error_slope, error_intercept
 
 linear_regression_data = linear_regression(x, y)
-linear_regression_data2 = linear_regression(x2, y2)
+linear_regression_data2 = linear_regression(para_x2, para_y2)
 
 print("This is your slope", linear_regression_data[0])
 print("This is your intercept", linear_regression_data[1])
@@ -68,8 +82,15 @@ print("These are your predicted y-values using your model", linear_regression_da
 print("This is your slope error:", linear_regression_data[4])
 print("This is your intercept error:", linear_regression_data[5])
 
+plot1.plot(x, y1, 'g+')
+plot1.plot(x, y2, 'c+')
 plot1.plot(x, y, 'r+', x, linear_regression_data[3], 'b-.')
-plot2.plot(x2, y2, 'r+', x2, linear_regression_data2[3], 'b-.')
+
+plot1.legend(['$\Delta\phi_{res1}$', '$\Delta\phi_{res2}$', '$\Delta\phi_{net}$', f'y = {linear_regression_data[0]:.2f}x  {linear_regression_data[1]:.2f}'])
+
+plot2.plot(para_x2, para_y2, 'r+', para_x2, linear_regression_data2[3], 'b-.')
+
+plot2.legend(['$\Delta\phi_{res, parallel}$', f'y = {linear_regression_data2[0]:.2f}x  {linear_regression_data2[1]:.2f}'])
 
 
 plotter.subplots_adjust(hspace=0.5)
